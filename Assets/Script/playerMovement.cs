@@ -5,9 +5,9 @@ using UnityEngine;
 public class playerMovement : MonoBehaviour
 {
     private Rigidbody2D rb2d;
-    public KeyCode moveUp;
-    public KeyCode moveDown;
+    public KeyCode space;
     public float speed;
+    private Vector2 playerMove;
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
@@ -16,18 +16,24 @@ public class playerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        var velocity = rb2d.velocity;
-        if(Input.GetKey(moveUp))
-        {
-            velocity.y = speed;
-        } 
-        else if (Input.GetKey(moveDown))
-        {
-            velocity.y = -speed;
-        }
-        else {
-            velocity.y = 0;
-        }
-        rb2d.velocity = velocity;
+        playerControl();
     }
+
+    private void playerControl()
+    {
+        playerMove = new Vector2(0, Input.GetAxisRaw("Vertical"));
+    }
+
+    private void FixedUpdate()
+    {
+        rb2d.velocity = playerMove * speed;
+    }
+
+    // private void playerAbility()
+    // {
+    //     if(space)
+    //     {
+
+    //     }
+    // }
 }
